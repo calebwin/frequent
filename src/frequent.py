@@ -11,7 +11,7 @@ class LinkParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag == 'a':
             for (key, value) in attrs:
-                if key == 'href' and value.find(self.base_url) > -1 and value.find("html") == -1:
+                if key == 'href' and value.startswith("/") and value.find("css") == -1 and value.find("js") == -1:
                     newUrl = parse.urljoin(self.base_url, value)
                     self.links = self.links + [newUrl]
 
@@ -30,7 +30,7 @@ class LinkParser(HTMLParser):
 def remove_between(document, start_str, end_str):
     while start_str in document and end_str in document:
         start_str_index = document.find(start_str)
-        end_str_index = document.find(end_str, start_str_index) + len(end_str)
+        end_str_index = document.find(end_str, start_str_index) + len(end_str) - 1
         document = document[0 : start_str_index] + document[end_str_index + 1 : len(document)]
     return document
 
@@ -48,9 +48,11 @@ def word_frequencies(website_url, max_pages):
             parser = LinkParser()
             data, links = parser.get_links(url)
             data = remove_between(data, "<script>", "</script>")
+            data = remove_between(data, "<style>", "</style>")
             data = remove_between(data, "<", ">")
             words = re.sub("[^\w]", " ",  data).split()
             found_words.extend(words)
+            pages_to_visit = pages_to_visit + links
         except:
             print("Failed")
 
