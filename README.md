@@ -6,7 +6,7 @@ frequent is a utility for crawling websites and building word frequency list. Ma
 import frequent
 
 def main():
-    word_frequencies = frequent.word_frequencies("https://www.w3schools.com", 25)
-    top_words = personal_website_frequencies.most_common(500)
+    website_word_frequencies = frequent.word_frequencies("https://www.w3schools.com", 25)
+    top_words = website_word_frequencies.most_common(500)
     print(top_words)
 ```
