@@ -1,4 +1,4 @@
-### Frequent
+# Frequent
 frequent is a utility for crawling websites and building word frequency list. Mainly made because I wanted to be able to find top n most common words on different websites, but I imagine there might be more useful applications. Or not. 
 
 ```python
